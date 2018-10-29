@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,56 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="./favicon.ico">
 
     <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <!--link href="../../dist/css/bootstrap.min.css" rel="stylesheet"-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
-
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
-    <script type='text/javascript'>    
-      var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
-
-
     
-      function init() {
-        Tabletop.init( { key: publicSpreadsheetUrl,
-                         callback: showInfo,
-                         simpleSheet: true } )
-      }
+    <script type='text/javascript'>
     
-      function showInfo(data, tabletop) {
-        alert('Successfully processed!')
-        console.log(data);
-      }
-    
-    //   window.addEventListener('DOMContentLoaded', init)
+        // Renders the table and wires up the modal...
+        var showInfo = function(data, tabletop) {
+            console.log(data);
+                    
+            // Function to show book data in a modal
+            var showModal = function() {
+            
+                // Locate the parent row of the caller and pull the book data from it.
+                var book = $(this).parent().data("book");
+                
+                var m = $("#bookInfo");
+                
+                m.find(".title").text(book.title);
+                m.find(".author").text(book.author);
+                m.find(".synposis").text(book.synposis);
+                m.find(".cover").attr("src","");
+                
+                if((book["image url"] || "") != "")
+                    m.find(".cover").attr("src",book["image url"])
+                                    .show();
+                else
+                    m.find(".cover").hide();
+                
+                m.modal("show");
+            };
+            
+            // Is my data valid?
+            if(Array.isArray(data)) {
+            
+                // Get your table...
+                var t = document.getElementById("data");
+                
+                // Create and populate your table header...
+                var th = document.createElement("thead");
+                th.innerHTML = "<tr><th>Title</th><th>Author</th><th>Read</th></tr>";
+                
+                // Attach it to your table.
+                t.appendChild(th);
+                
+                // Create a body...
+                var tb = document.createElement("tbody");
 
-     var tabletop = Tabletop.init({ 
-  key: publicSpreadsheetUrl, 
-  callback: showInfo 
-})
+                for(var i = 0; i < data.length; i++) {
+                    var book = data[i];
+                    
+                    // Create a row and corresponding cells...
+                    var tr = document.createElement("tr");
+                    var title = document.createElement("td");
+                    var author = document.createElement("td");
+                    var read = document.createElement("td");
+                    
+                    // Populate the cells...
+                    title.innerHTML = book.title;
+                    author.innerHTML = book.author;
+                    read.innerHTML = book["year that i read"];
+                    
+                    // Attach cells to row...
+                    tr.appendChild(title);
+                    tr.appendChild(author);
+                    tr.appendChild(read);
+                    
+                    // Store book data in the row.
+                    $(tr).data("book",data[i]);
+                                        
+                    // This could be done a milltion different ways but...
+                    // Attach the instance function to the click event of each cell.
+                    $(title).click(showModal); 
+                    $(author).click(showModal); 
+                    $(read).click(showModal); 
+                    
+                    // Attach row to body...
+                    tb.appendChild(tr);
+                }
+                
+                // Attach the body to the table...
+                t.appendChild(tb);
 
-        function doz() { 
-            document.getElementById("example").innerHTML = 'whatever'//tabletop.models.Sheet1.elements[1].title
+            } else {
+                console.log("data is invalid");
+                // todo:: show an error...
+            }
         }
+
+        
+        // Stuff you want to do after the page loads...
+        function init() {
+            var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+            
+            Tabletop.init({ key: publicSpreadsheetUrl,
+                            callback: showInfo,
+                            simpleSheet: true 
+            });
+        }
+
+        // Telling the browser to do the stuff after the page loads...
+        window.addEventListener('load', init); 
     </script>
   </head>
 
   <body>
 
     <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button> -->
 
-      <!-- <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <!-- <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -79,45 +150,54 @@
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-      </div> -->
-    </nav>
+      </div>
+    </nav> -->
 
     <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Reading List</h1>
-          <p class="lead text-muted">Or rather a read list.</p>
-          <!-- <p>
+            <h1 class="jumbotron-heading">Reading List</h1>
+            <p class="lead text-muted">Or rather a read list.</p>
+            <!-- <p>
             <a href="#" class="btn btn-primary my-2">Main call to action</a>
             <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-          </p> -->
+            </p> -->
         </div>
       </section>
 
 
     <main role="main" class="container">
-            <div id="example">wtf</div>
-        
-
-    </main><!-- /.container -->
-
-
-    <script type='text/javascript'>
-        // var x = tabletop.models.Sheet1.elements;
-        window.onload = function() { 
-            doz() 
-        };
-        // doz();
-
-    </script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
+        <table class="table table-striped" id="data">
+        </table>
+    </main>
+    
+    <div id="bookInfo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<h5 class="modal-title">Modal title</h5>-->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4">
+                            <img class="img-thumbnail cover" src="" alt="Book Cover" style="max-height:200px;">
+                        </div>
+                        <div class="col-8">
+                            <h1 class="title"></h1>
+                            <h2 class="author"></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="synposis"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
