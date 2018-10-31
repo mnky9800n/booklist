@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="./favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>John's read list</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -115,6 +116,10 @@
 
         // Telling the browser to do the stuff after the page loads...
         window.addEventListener('load', init); 
+        
+        function makenoise() {
+            alert('button was clicked!');
+        };
     </script>
   </head>
 
@@ -157,10 +162,12 @@
         <div class="container">
             <h1 class="jumbotron-heading">Reading List</h1>
             <p class="lead text-muted">Or rather a read list.</p>
-            <!-- <p>
-            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-            </p> -->
+            <p class="lead text-muted">The source of this can be found <a href="https://github.com/mnky9800n/booklist">on github.</a></p>
+            <p>
+            <input id="listbutton" type="submit" name="listbutton" onclick="makenoise();" value="List View"/>
+            <a href="#" class="btn btn-primary my-2">List View</a>
+            <a href="#" class="btn btn-secondary my-2" id="tileview">Tile View</a>
+            </p>
         </div>
       </section>
 
