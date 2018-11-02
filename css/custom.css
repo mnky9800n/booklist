@@ -1,0 +1,21 @@
+.jumbotron {
+    background-image: url("../img/jumbotron_header.gif");
+    background-color: #17234E;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: 100%;
+    
+}
+
+.jumbotron h1{
+    color: #fff;
+}
+
+.jumbotron p{
+    color: #fff;
+    font-size: 18px;
+}
+
