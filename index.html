@@ -106,109 +106,60 @@
         
         var showCards = function(data, tabletop) {
 
+            var t =  document.getElementById("tiles");
 
-
-            // create a row
-            // if index % 3 == 0 create new row
-            // else create create card for book
-
-
-            // create row
-            // for book in booktable
-            //    if book.index % 3 == 0 create new row
-            //    create card for new book
-            //         get title, imgurl, author, synposis
-            //    
-
-            //     <div class="card" style="width: 18rem;">
-            // <img class="card-img-top" src="..." alt="Card image cap">
-            // <div class="card-body">
-            //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            // </div>
-            // </div>
-            for(var i = 0; i < data.length; i++) {
-
-                var book = data[i];
-                   
-                // create a row for the cards if there isnt one or 
-                // if there is already three cards in a row
-                if(i % 3 == 0) {
-                    var row = document.createElement("div");
-                    row.className = "row";
-
-                }
-
-                // create the card
-                var col = row.appendChild("div");
-                var card = col.appendChild("div");
-                var cardImg = card.appendChild("img");
-                var cardTitle = card.appendChild("h5");
-                var cardAuthor = card.appendChild("h7");
-                var cardText = card.appendChild("p");
-
-                // populate the card with the appropriate class formatting
-                col.className = "col-md-4";
-                card.className = "card";
-                cardImg.className = "card-img-top";
-                cardTitle.className = "card-title";
-                cardAuthor.className = "card-author";
-                cardText.className = "card-text";
-
-                // populate the card with data
-                cardTitle.innerHTML = book.title;
-                cardAuthor.innerHTML = book.author;
-                cardImg.src = book['img url'];
-                cardText.innerHTML = book.synopsis;
+            if(Array.isArray(data)) { 
                 
+                for(var i = 0; i < data.length; i++) {
 
-                // create card in row
-        //         <div class='col-md-4'>
-        //     <div class='card'>
-        //         <img class='card-img-top'>
-        //         <h5 class='card-title'></h5>
-        //         <p class='card-text'></p>
-        //     </div>
-        // </div>
+                    var book = data[i];
+                    
+                    // create a row for the cards if there isnt one or 
+                    // if there is already three cards in a row
+                    if(i % 3 == 0) {
+                        var row = document.createElement("div");
+                        row.className = "row";
+                        t.appendChild(row);
+                    }
 
-                // add data to card
+                    // create the card
+                    var col = document.createElement("div");
+                    var card = document.createElement("div");
+                    var cardImg = document.createElement("img");
+                    var cardTitle = document.createElement("h5");
+                    var cardAuthor = document.createElement("h6");
+                    var cardText = document.createElement("p");
 
+                    // populate the card with the appropriate class formatting
+                    col.className = "col-md-4";
+                    card.className = "card";
+                    cardImg.className = "card-img-top";
+                    cardTitle.className = "card-title";
+                    cardAuthor.className = "card-author";
+                    cardText.className = "card-text";
 
-                // append row to body
+                    // populate the card with data
+                    cardTitle.innerHTML = book.title;
+                    cardAuthor.innerHTML = book.author;
+                    cardImg.src = book['image url'];
+                    cardText.innerHTML = book.synposis;
 
+                    console.log(cardText);
+
+                    // append shit to the row
+                    var cardcol = row.appendChild(col);
+                    cardcol.appendChild(card);
+                    cardcol.appendChild(cardImg);
+                    cardcol.appendChild(cardTitle);
+                    cardcol.appendChild(cardAuthor);
+                    cardcol.appendChild(cardText);
+
+                    }
+
+                } else {
+                console.log("data is invalid");
+                // todo:: show an error...
             }
-
-            // for(var i = 0; i < data.length; i++) {
-            //         var book = data[i];
-                    
-            //         // Create a row and corresponding cells...
-            //         var tr = document.createElement("tr");
-            //         var title = document.createElement("td");
-            //         var author = document.createElement("td");
-            //         var read = document.createElement("td");
-                    
-            //         // Populate the cells...
-            //         title.innerHTML = book.title;
-            //         author.innerHTML = book.author;
-            //         read.innerHTML = book["year that i read"];
-                    
-            //         // Attach cells to row...
-            //         tr.appendChild(title);
-            //         tr.appendChild(author);
-            //         tr.appendChild(read);
-                    
-            //         // Store book data in the row.
-            //         $(tr).data("book",data[i]);
-                                        
-            //         // This could be done a milltion different ways but...
-            //         // Attach the instance function to the click event of each cell.
-            //         $(title).click(showModal); 
-            //         $(author).click(showModal); 
-            //         $(read).click(showModal); 
-                    
-            //         // Attach row to body...
-            //         tb.appendChild(tr);
-            //     }
-
 
         }
         
@@ -292,41 +243,8 @@
 
     <main role="main" class="container">
 
-        <div class='col-md-4'>
-            <div class='card'>
-                <img class='card-img-top'>
-                <h5 class='card-title'></h5>
-                <p class='card-text'></p>
-            </div>
+        <div class='container' id='tiles'>
         </div>
-
-        <div class='row'>
-            <div class='col-md-4'>
-                <div class='card'>
-                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
-                    <h5 class='card-title'>your mom</h5>
-                    <p class='card-text'>it's called hentai and its art.</p>
-                </div>
-            </div>
-        <div class='col-md-4'>
-                <div class='card'>
-                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
-                    <h5 class='card-title'>your mom</h5>
-                    <p class='card-text'>it's called hentai and its art.</p>
-                </div>
-            </div>
-
-        <div class='col-md-4'>
-                <div class='card'>
-                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
-                    <h5 class='card-title'>your mom</h5>
-                    <p class='card-text'>it's called hentai and its art.</p>
-                </div>
-            </div>
-        </div>
-
-            
-            
 
         <table class="table table-striped" id="data">
         </table>
