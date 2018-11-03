@@ -22,7 +22,7 @@
     <script type='text/javascript'>
     
         // Renders the table and wires up the modal...
-        var showInfo = function(data, tabletop) {
+        var showTable = function(data, tabletop) {
             console.log(data);
                     
             // Function to show book data in a modal
@@ -103,14 +103,71 @@
                 // todo:: show an error...
             }
         }
+        
+        var showCards = function(data, tabletop) {
 
+            var t =  document.getElementById("tiles");
+
+            if(Array.isArray(data)) { 
+                
+                for(var i = 0; i < data.length; i++) {
+
+                    var book = data[i];
+                    
+                    // create a row for the cards if there isnt one or 
+                    // if there is already three cards in a row
+                    if(i % 3 == 0) {
+                        var row = document.createElement("div");
+                        row.className = "row";
+                        t.appendChild(row);
+                    }
+
+                    // create the card
+                    var col = document.createElement("div");
+                    var card = document.createElement("div");
+                    var cardImg = document.createElement("img");
+                    var cardTitle = document.createElement("h5");
+                    var cardAuthor = document.createElement("h6");
+                    var cardText = document.createElement("p");
+
+                    // populate the card with the appropriate class formatting
+                    col.className = "col-md-4";
+                    card.className = "card";
+                    cardImg.className = "card-img-top";
+                    cardTitle.className = "card-title";
+                    cardAuthor.className = "card-author";
+                    cardText.className = "card-text";
+
+                    // populate the card with data
+                    cardTitle.innerHTML = book.title;
+                    cardAuthor.innerHTML = book.author;
+                    cardImg.src = book['image url'];
+                    cardText.innerHTML = book.synposis;
+
+                    // append shit to the row
+                    var cardcol = row.appendChild(col);
+                    cardcol.appendChild(card);
+                    cardcol.appendChild(cardImg);
+                    cardcol.appendChild(cardTitle);
+                    cardcol.appendChild(cardAuthor);
+                    cardcol.appendChild(cardText);
+
+                    }
+
+                } else {
+                console.log("data is invalid");
+                // todo:: show an error...
+            }
+
+        }
         
         // Stuff you want to do after the page loads...
         function init() {
             var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
             
             Tabletop.init({ key: publicSpreadsheetUrl,
-                            callback: showInfo,
+                            // callback: showTable,
+                            callback: showCards,
                             simpleSheet: true 
             });
         }
@@ -118,10 +175,43 @@
         // Telling the browser to do the stuff after the page loads...
         window.addEventListener('load', init); 
 
-        function showTable() {
-            // todo: make this function show the list view
-            alert('This should show the table');
-        };
+        window.onload = function() {
+
+            // switch to list view on button click
+            var lv = document.getElementById("listView");
+            var tv = document.getElementById("tileView");
+
+            lv.onclick = function() {
+
+                var delTiles = document.getElementById('tiles');
+                delTiles.innerHTML = ''
+
+                var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+            
+                Tabletop.init({ key: publicSpreadsheetUrl,
+                                callback: showTable,
+                                simpleSheet: true 
+                });
+            }
+
+            tv.onclick = function() {
+                var delTable = document.getElementById("data");
+                delTable.innerHTML = ''
+
+                var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+            
+                Tabletop.init({ key: publicSpreadsheetUrl,
+                            callback: showCards,
+                            simpleSheet: true 
+                })
+            }
+
+        }
+
+        // function showTable() {
+        //     // todo: make this function show the list view
+        //     alert('This should show the table');
+        // };
 
         function showTile() {
             // todo: make this function show the tile view
@@ -170,10 +260,10 @@
             <h1 class="jumbotron-heading">Reading List</h1>
             <p>Or rather a read list.</p>
             <p>
-                <input id="listbutton" type="submit" name="listbutton" onclick="showTable();" value="List View"/>
-                <input id="listbutton" type="submit" name="listbutton" onclick="showTile();" value="Tile View"/>
-                <a href="#" class="btn btn-primary my-2">List View</a>
-            <a href="#" class="btn btn-secondary my-2" id="tileview">Tile View</a>
+                <!-- <input id="listbutton" type="submit" name="listbutton" onclick="showTable();" value="List View"/>
+                <input id="listbutton" type="submit" name="listbutton" onclick="showTile();" value="Tile View"/> -->
+                <a href="#" class="btn btn-primary my-2" id="listView">List View</a>
+            <a href="#" class="btn btn-secondary my-2" id="tileView">Tile View</a>
             </p>
 
             <p>The source of this can be found <a href="https://github.com/mnky9800n/booklist">on github.</a></p>
@@ -183,6 +273,10 @@
 
 
     <main role="main" class="container">
+
+        <div class='container' id='tiles'>
+        </div>
+
         <table class="table table-striped" id="data">
         </table>
     </main>
