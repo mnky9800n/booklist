@@ -22,7 +22,7 @@
     <script type='text/javascript'>
     
         // Renders the table and wires up the modal...
-        var showInfo = function(data, tabletop) {
+        var showTable = function(data, tabletop) {
             console.log(data);
                     
             // Function to show book data in a modal
@@ -103,14 +103,122 @@
                 // todo:: show an error...
             }
         }
+        
+        var showCards = function(data, tabletop) {
 
+
+
+            // create a row
+            // if index % 3 == 0 create new row
+            // else create create card for book
+
+
+            // create row
+            // for book in booktable
+            //    if book.index % 3 == 0 create new row
+            //    create card for new book
+            //         get title, imgurl, author, synposis
+            //    
+
+            //     <div class="card" style="width: 18rem;">
+            // <img class="card-img-top" src="..." alt="Card image cap">
+            // <div class="card-body">
+            //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            // </div>
+            // </div>
+            for(var i = 0; i < data.length; i++) {
+
+                var book = data[i];
+                   
+                // create a row for the cards if there isnt one or 
+                // if there is already three cards in a row
+                if(i % 3 == 0) {
+                    var row = document.createElement("div");
+                    row.className = "row";
+
+                }
+
+                // create the card
+                var col = row.appendChild("div");
+                var card = col.appendChild("div");
+                var cardImg = card.appendChild("img");
+                var cardTitle = card.appendChild("h5");
+                var cardAuthor = card.appendChild("h7");
+                var cardText = card.appendChild("p");
+
+                // populate the card with the appropriate class formatting
+                col.className = "col-md-4";
+                card.className = "card";
+                cardImg.className = "card-img-top";
+                cardTitle.className = "card-title";
+                cardAuthor.className = "card-author";
+                cardText.className = "card-text";
+
+                // populate the card with data
+                cardTitle.innerHTML = book.title;
+                cardAuthor.innerHTML = book.author;
+                cardImg.src = book['img url'];
+                cardText.innerHTML = book.synopsis;
+                
+
+                // create card in row
+        //         <div class='col-md-4'>
+        //     <div class='card'>
+        //         <img class='card-img-top'>
+        //         <h5 class='card-title'></h5>
+        //         <p class='card-text'></p>
+        //     </div>
+        // </div>
+
+                // add data to card
+
+
+                // append row to body
+
+            }
+
+            // for(var i = 0; i < data.length; i++) {
+            //         var book = data[i];
+                    
+            //         // Create a row and corresponding cells...
+            //         var tr = document.createElement("tr");
+            //         var title = document.createElement("td");
+            //         var author = document.createElement("td");
+            //         var read = document.createElement("td");
+                    
+            //         // Populate the cells...
+            //         title.innerHTML = book.title;
+            //         author.innerHTML = book.author;
+            //         read.innerHTML = book["year that i read"];
+                    
+            //         // Attach cells to row...
+            //         tr.appendChild(title);
+            //         tr.appendChild(author);
+            //         tr.appendChild(read);
+                    
+            //         // Store book data in the row.
+            //         $(tr).data("book",data[i]);
+                                        
+            //         // This could be done a milltion different ways but...
+            //         // Attach the instance function to the click event of each cell.
+            //         $(title).click(showModal); 
+            //         $(author).click(showModal); 
+            //         $(read).click(showModal); 
+                    
+            //         // Attach row to body...
+            //         tb.appendChild(tr);
+            //     }
+
+
+        }
         
         // Stuff you want to do after the page loads...
         function init() {
             var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
             
             Tabletop.init({ key: publicSpreadsheetUrl,
-                            callback: showInfo,
+                            // callback: showTable,
+                            callback: showCards,
                             simpleSheet: true 
             });
         }
@@ -118,10 +226,10 @@
         // Telling the browser to do the stuff after the page loads...
         window.addEventListener('load', init); 
 
-        function showTable() {
-            // todo: make this function show the list view
-            alert('This should show the table');
-        };
+        // function showTable() {
+        //     // todo: make this function show the list view
+        //     alert('This should show the table');
+        // };
 
         function showTile() {
             // todo: make this function show the tile view
@@ -183,6 +291,43 @@
 
 
     <main role="main" class="container">
+
+        <div class='col-md-4'>
+            <div class='card'>
+                <img class='card-img-top'>
+                <h5 class='card-title'></h5>
+                <p class='card-text'></p>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-4'>
+                <div class='card'>
+                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
+                    <h5 class='card-title'>your mom</h5>
+                    <p class='card-text'>it's called hentai and its art.</p>
+                </div>
+            </div>
+        <div class='col-md-4'>
+                <div class='card'>
+                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
+                    <h5 class='card-title'>your mom</h5>
+                    <p class='card-text'>it's called hentai and its art.</p>
+                </div>
+            </div>
+
+        <div class='col-md-4'>
+                <div class='card'>
+                    <img class="card-img-top" src="https://cdn.waterstones.com/bookjackets/large/9780/6848/9780684832678.jpg" alt="Card image cap">
+                    <h5 class='card-title'>your mom</h5>
+                    <p class='card-text'>it's called hentai and its art.</p>
+                </div>
+            </div>
+        </div>
+
+            
+            
+
         <table class="table table-striped" id="data">
         </table>
     </main>
