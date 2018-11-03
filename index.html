@@ -144,8 +144,6 @@
                     cardImg.src = book['image url'];
                     cardText.innerHTML = book.synposis;
 
-                    console.log(cardText);
-
                     // append shit to the row
                     var cardcol = row.appendChild(col);
                     cardcol.appendChild(card);
@@ -176,6 +174,39 @@
 
         // Telling the browser to do the stuff after the page loads...
         window.addEventListener('load', init); 
+
+        window.onload = function() {
+
+            // switch to list view on button click
+            var lv = document.getElementById("listView");
+            var tv = document.getElementById("tileView");
+
+            lv.onclick = function() {
+
+                var delTiles = document.getElementById('tiles');
+                delTiles.innerHTML = ''
+
+                var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+            
+                Tabletop.init({ key: publicSpreadsheetUrl,
+                                callback: showTable,
+                                simpleSheet: true 
+                });
+            }
+
+            tv.onclick = function() {
+                var delTable = document.getElementById("data");
+                delTable.innerHTML = ''
+
+                var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+            
+                Tabletop.init({ key: publicSpreadsheetUrl,
+                            callback: showCards,
+                            simpleSheet: true 
+                })
+            }
+
+        }
 
         // function showTable() {
         //     // todo: make this function show the list view
@@ -229,10 +260,10 @@
             <h1 class="jumbotron-heading">Reading List</h1>
             <p>Or rather a read list.</p>
             <p>
-                <input id="listbutton" type="submit" name="listbutton" onclick="showTable();" value="List View"/>
-                <input id="listbutton" type="submit" name="listbutton" onclick="showTile();" value="Tile View"/>
-                <a href="#" class="btn btn-primary my-2">List View</a>
-            <a href="#" class="btn btn-secondary my-2" id="tileview">Tile View</a>
+                <!-- <input id="listbutton" type="submit" name="listbutton" onclick="showTable();" value="List View"/>
+                <input id="listbutton" type="submit" name="listbutton" onclick="showTile();" value="Tile View"/> -->
+                <a href="#" class="btn btn-primary my-2" id="listView">List View</a>
+            <a href="#" class="btn btn-secondary my-2" id="tileView">Tile View</a>
             </p>
 
             <p>The source of this can be found <a href="https://github.com/mnky9800n/booklist">on github.</a></p>
