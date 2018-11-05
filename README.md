@@ -6,13 +6,13 @@ This is a web app that uses google sheets as a database to create a book list. A
 
 1. Fork this or just download the code I don't care.
 2. Create a google sheet with the following columns
-* title
-* author
-* year that i read
-* is collection
-* image url
-* book cover
-* synopsis
+* title - title of the book
+* author - author of the book
+* year that i read - year when you read the book
+* is collection - if the book is a collection of books (good for scifi/fantasy)
+* image url - url for some image you want to use for the book
+* book cover - this is internally used by me to render the image to make sure the url works (used `=IMAGE('image url column', 1)`).
+* synopsis - your thoughts about the book
 3. fill in your data (This is the time consuming part)
 4. publish the sheet (can't use it as a database if the data isn't available)
 5. change `publicSpreadsheetUrl` to be your shared spreadsheet url.
