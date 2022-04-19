@@ -17,7 +17,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<!--     <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+
     <link rel="stylesheet" href="css/custom.css"/>
     <script type='text/javascript'>
     
@@ -162,19 +164,30 @@
         }
         
         // Stuff you want to do after the page loads...
-        function init() {
-            var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
+//         function init() {
+//             var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pubhtml';
             
-            Tabletop.init({ key: publicSpreadsheetUrl,
-                            // callback: showTable,
-                            callback: showCards,
-                            simpleSheet: true 
-            });
-        }
+//             Tabletop.init({ key: publicSpreadsheetUrl,
+//                             // callback: showTable,
+//                             callback: showCards,
+//                             simpleSheet: true 
+//             });
+//         }
 
-        // Telling the browser to do the stuff after the page loads...
-        window.addEventListener('load', init); 
-
+//         // Telling the browser to do the stuff after the page loads...
+//         window.addEventListener('load', init); 
+          function init() {
+                    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1KPuG5z52VWvloXocAwOXJf3iT56sTLi-TRSANyvMZws/pub?output=csv';
+                    Papa.parse(publicSpreadsheetUrl, {
+                    download: true,
+                    header: true,
+                    complete: function(results) {
+                      var data = results.data
+                      console.log(data)
+                    }
+                  })
+        window.addEventListener('DOMContentLoaded', init)
+            
         window.onload = function() {
 
             // switch to list view on button click
