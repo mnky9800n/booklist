@@ -19,3 +19,6 @@
     font-size: 18px;
 }
 
+table.cursor-pointer td {
+    cursor: pointer;    
+}
