@@ -236,14 +236,3 @@ $booklist.init = function (configuration) {
             
     return true;
 }
-
-
-
-
-
-
-
-    var showCards = function(data) {
-
-
-    }
