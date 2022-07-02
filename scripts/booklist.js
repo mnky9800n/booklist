@@ -8,7 +8,7 @@ $booklist.defaultConfiguration = {
     modalTemplateId: null,       // Required
     listViewButtonId: null,      // Required
     tileViewButtonId: null,      // Required
-    defaultMode: "list",         // Optional (list or tile)
+    defaultMode: "tile",         // Optional (list or tile)
 }
 
 $booklist.init = function (configuration) {
